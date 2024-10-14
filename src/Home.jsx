@@ -33,7 +33,7 @@ export default function Home() {
 
     return (
         <section className="h-screen bg-neutral-950 px-[5rem] flex justify-center items-center text-white">
-            <div className="border-neutral-800 border rounded-lg h-[30rem] w-[25rem] p-[2rem] flex flex-col gap-[2rem]">
+            <div className="border-neutral-800 border rounded-lg px-[3rem] py-[3rem] flex flex-col gap-[2rem]">
                 <div>
                     <h1 className="text-[1.5rem]">EZ-Sens</h1>
                     <h1 className="text-neutral-500 text-[0.8rem]">Random Sensitivity Creator</h1>
