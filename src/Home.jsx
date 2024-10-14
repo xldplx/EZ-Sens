@@ -1,5 +1,36 @@
+import { useEffect } from 'react';
 
 export default function Home() {
+    useEffect(() => {
+        function getRandomSensitivity(avg, deviation) {
+            const min = avg - deviation;
+            const max = avg + deviation;
+            return Math.random() * (max - min) + min;
+        }
+
+        const generateSensButton = document.getElementById("generateSens");
+        if (generateSensButton) {
+            generateSensButton.addEventListener("click", () => {
+                const avgSens = parseFloat(document.getElementById("avgSens").value);
+                const devDiff = parseFloat(document.getElementById("devDiff").value);
+
+                if (!isNaN(avgSens) && !isNaN(devDiff)) {
+                    const randomSensitivity = getRandomSensitivity(avgSens, devDiff);
+                    document.getElementById("result").value = randomSensitivity.toFixed(2);
+                } else {
+                    document.getElementById("result").value = 'Invalid number. Try again.';
+                }
+            });
+        }
+
+        // Cleanup event listener on component unmount
+        return () => {
+            if (generateSensButton) {
+                generateSensButton.removeEventListener("click", () => {});
+            }
+        };
+    }, []);
+
     return (
         <section className="h-screen bg-neutral-950 px-[5rem] flex justify-center items-center text-white">
             <div className="border-neutral-800 border rounded-lg h-[30rem] w-[25rem] p-[2rem] flex flex-col gap-[2rem]">
@@ -15,28 +46,10 @@ export default function Home() {
                     <button id="generateSens" className="flex self-center border-neutral-800 border px-[2rem] py-[0.5rem] rounded-lg transform-all duration-300 hover:bg-white hover:text-black">Randomize</button>
                 </div>
                 <div>
-                    <h1>Your New Random Sensis\tivity:</h1>
+                    <h1>Your New Random Sensitivity:</h1>
                     <input type="text" name="" id="result" className="w-full bg-neutral-950 border-neutral-800 border rounded-lg px-[0.5rem] h-[2.5rem]"/>
                 </div>
             </div>
         </section>
-    )
+    );
 }
-
-function getRandomSensitivity(avg, deviation) {
-    const min = avg - deviation;
-    const max = avg + deviation;
-    return Math.random() * (max - min) + min;
-}
-
-document.getElementById("generateSens").addEventListener("click", () => {
-    const avgSens = parseFloat(document.getElementById("avgSens").value);
-    const devDiff = parseFloat(document.getElementById("devDiff").value);
-
-    if (!isNaN(avgSens) && !isNaN(devDiff)) {
-        const randomSensitivity = getRandomSensitivity(avgSens, devDiff);
-        document.getElementById("result").value = randomSensitivity.toFixed(2);
-    } else {
-        document.getElementById("result").value = 'Invalid number. Try again.';
-    }
-});
